@@ -1,0 +1,182 @@
+{% extends 'wiljeanApp/base/base.html' %}
+{% load static %}
+
+{% block title %} Blog {% endblock %}
+
+{% block content %}    
+<main class="main-content" style="padding-top: 100px;">
+    <div class="fullwidth-block inner-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="content">
+                        <h2 class="entry-title">Blog Detail</h2>
+                        
+                        <div class="post">
+                            <div class="entry-date">
+                                <div class="date">{{ blogs.publish_date|date:'d' }}</div>
+                                <span class="month">{{ blogs.publish_date|date:'M' }}</span>
+                            </div>
+                            <div class="featured-image">
+                                <img src="{{ blogs.image.url }}" alt="" style="height:600px;">
+                            </div>
+                            <h2 class="entry-title"><a href="">{{ blogs.title }}</a></h2>
+                            <p>{{ blogs.content | safe }}</p>
+                            
+                        </div>
+                        
+
+						
+                    </div>
+                </div>
+                {% include 'wiljeanApp/base/about_sidebar.html' %}
+            </div>
+                    <!-- comment section -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="notification-container" id="notification_message">
+                    <!-- notification goes here -->
+                    
+                </div>
+                <h2 class="page-title ">Leave a comment</h2>
+                <form action="." method = "post" class="contact-form" id="commentForm">
+                    {% csrf_token %}
+                    {% if not user.is_authenticated %}
+                    <div class="form-group">
+                        <label for="id_title">Name:</label>
+                        {{ form.name }}
+                        {% for error in form.name.errors %}
+                        <p class="text-danger">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    <div class="form-group">
+                        <label for="id_title">Message:</label>
+                        {{ form.message }}
+                        {% for error in form.message.errors %}
+                        <p class="text-danger">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                    <input type="submit" value="Post Comment">
+                    
+                </form>
+            </div>
+            
+        </div>
+        <!-- end of comment -->
+        <!-- comments -->
+        
+        <div class="col-md-10 col-md-push-1">
+            <aside class="sidebar">
+                <div class="widget">
+                    {% if comments %}
+                    <h3 class="widget-title">All comment</h3>
+                    {% endif %}
+
+                    <ul class="discography-list" id = "commentid">
+                        
+                        <!-- comment goes here -->
+                    </ul>
+                    
+                </div>
+            </aside>
+        </div>
+
+        <!-- end -->
+        </div>
+
+    </div> <!-- .testimonial-section -->
+</main> <!-- .main-content -->
+
+<script>
+    $(document).ready(function(){
+    function loadComments() {
+    $.ajax({
+        url: "{% url 'fetch_comments' blogs.id %}",
+        type: 'GET',
+        success: function(response){
+            let commentsHTML = '';
+
+                for (let i = 0; i < response.comments.length; i++) {
+                    let comment = response.comments[i];
+
+                    // Access user data directly from the comment object
+                    let name =comment.name ? comment.name : comment.user;
+
+                    // Construct HTML for the comment
+                    commentsHTML += `<li>
+                        <div class="detail">
+                            <span class="year">${comment.text}</span>
+                            <span class="track">By: ${name} | ${comment.date}</span><br>
+                        </div>
+                    </li>`;
+                }
+            // }
+
+            $("#commentid").html(commentsHTML); // Replace existing comments with new ones
+        },
+        error: function(xhr, status, error){
+            console.log(status, error);
+        }
+    });
+}
+
+loadComments();
+
+      
+       
+    $("#commentForm").submit(function(e){
+        e.preventDefault();
+        $.ajax({
+            url: $(this).attr('action'),
+            type: $(this).attr('method'),
+            data: $(this).serialize(),
+            success: function(response){
+                // Load comments again after successful comment submission
+                loadComments();
+                
+
+                $('#notification_message').html(`<div class="alert alert-success">${response.message}</div>`);
+                // Optionally, you can reset the form
+                $('#commentForm')[0].reset();
+            },
+            error: function(xhr, status, error){
+                console.log(status, error)
+                $('#notification_message').html('<div class="alert alert-danger">Error: ' + status + '</div>');
+            }
+        });
+    });
+
+    // SUBSCRIPTION
+    $("#subForm").submit(function(e){
+        e.preventDefault();
+        
+        // Get the CSRF token value
+        var csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
+        
+        $.ajax({
+            url: $(this).attr('action'),
+            type: $(this).attr('method'),
+            processData: false,
+            contentType: false,
+            
+            // Include the CSRF token in the data
+            data: $(this).serialize() + "&csrfmiddlewaretoken=" + csrfToken,
+            success: function(data){
+                if(data.success){
+                    console.log('Submitted', data.message);                  
+                } else {
+                    console.log('fail', data.message);
+                }
+            },
+            error: function(xhr, status, error){
+                console.log(status, error);
+            }
+        });
+    });
+    
+
+});
+</script>
+    {% endblock %}

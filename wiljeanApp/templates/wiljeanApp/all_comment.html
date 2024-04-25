@@ -1,0 +1,46 @@
+{% extends 'wiljeanApp/base/base.html' %}
+{% load static %}
+
+{% block title %} All Comment {% endblock %}
+
+{% block content %}
+
+<div class="col-md-10 col-md-push-1" style="padding-top: 200px;">
+    <aside class="sidebar">
+        <div class="widget mx-auto">
+            <h3 class="widget-title">All comment</h3>
+            
+            <ul class="discography-list">
+                {% for comment in comments %}
+                {% if comment.name %}
+                <li>
+                    <!-- <figure class="cover"><img src="{{ album.cover.url }}" alt="thumbnail 1"></figure> -->
+                    <div class="detail">
+                       
+                        <span class="year">{{ comment.message }}</span>
+                        
+                        <span class="track">By: {{comment.name}}| {{ comment.date|date }}</span><br>
+                       
+                        
+                    </div>
+                </li>
+                {% else %}
+                <li>
+                    <!-- <figure class="cover"><img src="{{ album.cover.url }}" alt="thumbnail 1"></figure> -->
+                    <div class="detail">
+                        
+                        <span class="year">{{ comment.message }}</span>
+                        
+                        <span class="track">By: {{comment.user}}| {{ comment.date|date }}</span><br>
+                          
+                    </div>
+                </li>
+                {% endif %}
+            
+                {% endfor %}
+                
+            </ul>
+        </div>
+    </aside>
+</div>
+{% endblock %}

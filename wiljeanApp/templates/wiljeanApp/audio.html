@@ -1,0 +1,31 @@
+{% extends 'wiljeanApp/base/audio_base.html' %}
+
+{% block title %} Audio {% endblock %}
+{% load static %}
+
+{% block content %}
+
+<div class="audio-player">
+    <audio id="audioPlayer" controls>
+        <source src="{% if music_id %}{% url 'stream_audio' music_id %}{% else %}{% url 'stream_other_audio' other_music_id %}{% endif %}" type="audio/mpeg">
+       
+        Your browser does not support the audio element.
+    </audio>
+    <div class="audio-controls">
+        <button id="playPauseBtn"><i class="fas fa-play"></i></button>
+        <button id="muteBtn"><i class="fas fa-volume-up"></i></button>
+    </div>
+    <div class="audio-progress">
+        <div class="audio-progress-bar"></div>
+    </div>
+    <div class="audio-time">
+        <span id="currentTime">0:00</span>
+        <span id="totalTime">0:00</span>
+    </div>
+</div>
+
+
+{% endblock %}
+
+
+

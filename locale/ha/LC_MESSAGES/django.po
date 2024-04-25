@@ -1,0 +1,80 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-18 12:44-0700\n"
+"PO-Revision-Date: 2024-04-18 12:47+0000\n"
+"Last-Translator: Wilfred Mathias <>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Translated-Using: django-rosetta 0.10.0\n"
+
+#: .\wiljeanApp\models.py:133
+msgid "Title"
+msgstr "Kan Magana"
+
+#: .\wiljeanApp\models.py:134
+#| msgid "content"
+msgid "Content"
+msgstr "Bayani"
+
+#: .\wiljeanApp\models.py:135
+msgid "Image"
+msgstr "Hoto"
+
+#: .\wiljeanApp\models.py:136
+msgid "Publish_date"
+msgstr "Ranar walafa"
+
+#: .\wiljeanApp\templates\wiljeanApp\blog.html:16
+msgid "Blog"
+msgstr "Shafi"
+
+#: .\wiljeanApp\templates\wiljeanApp\blog.html:28
+msgid "Read more"
+msgstr "Ci gaba da karatun"
+
+#: .\wiljeanApp\templates\wiljeanApp\blog.html:30
+msgid "Delete Blog"
+msgstr "Chire shafin"
+
+#: .\wiljeanApp\templates\wiljeanApp\blog.html:39
+msgid "First"
+msgstr "farko"
+
+#: .\wiljeanApp\templates\wiljeanApp\blog.html:40
+msgid "Prev"
+msgstr "baya"
+
+#: .\wiljeanApp\templates\wiljeanApp\blog.html:44
+msgid "Page"
+msgstr "Peji"
+
+#: .\wiljeanApp\templates\wiljeanApp\blog.html:44
+msgid "of"
+msgstr "na"
+
+#: .\wiljeanApp\templates\wiljeanApp\blog.html:48
+msgid "Next"
+msgstr "na gaba"
+
+#: .\wiljeanApp\templates\wiljeanApp\blog.html:49
+msgid "Last"
+msgstr "karshe"
+
+#: .\wiljean_singing_ministry\settings.py:146
+msgid "English"
+msgstr "Turanci"
+
+#: .\wiljean_singing_ministry\settings.py:147
+msgid "Hausa"
+msgstr "hausa"

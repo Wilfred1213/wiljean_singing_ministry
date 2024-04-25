@@ -1,0 +1,69 @@
+{% extends 'wiljeanApp/base/base.html' %}
+
+{% load static %}
+{% block title %} Download {% endblock %}
+
+{% block content %}				
+    <main class="main-content" style="padding-top: 50px;">
+        <div class="fullwidth-block download">
+            <div class="container">
+                
+
+                    <div class="row">
+                        
+                        
+                        <div class="col-md-5 col-md-push-2">
+                            <h2 class="page-title">Music Details </h2>
+                            
+                            <div class="item">
+                                <h3 class="item-title">{{ music.title }} - by {{ music.artist }}</h3>
+                                <span class="year">{{music.publish_date|date:"Y"}}</span>
+                                <a href="{% url 'download_other_music' music.id %}" class="button small primary">Download</a>
+                                <a href="{% url 'play_mp3' other_music_id=music.id  music_id=0 %}" class="button small secondary">Play</a>
+                                {% if user == other.user %}
+                                    <a href="{% url 'edit_music' music.id %}" class="button small secondary ">Edit</a>
+                                    <a href="{% url 'confirmation' other_music_id=music.id wil_id=0   %}" class="button small secondary">Delete</a>
+                                {% endif %}
+                                <div class="social-share">
+                                    <span>Share:</span>
+                                    <a href="#" onclick="shareOnFacebook('{{ other.id }}')"><i class="fa fa-facebook"></i></a>
+                                    <a href="#" onclick="shareOnTwitter('{{ other.id }}')"><i class="fa fa-twitter"></i></a>
+                                    <a href="#" onclick="shareOnGooglePlus('{{ other.id }}')"><i class="fa fa-google-plus"></i></a>
+                                    <a href="#" onclick="shareOnPinterest('{{ other.id }}')"><i class="fa fa-pinterest"></i></a>
+                                </div>
+                            </div>
+                            
+
+                           
+                        </div>
+                    </div>
+                
+            </div>
+        </div> <!-- .testimonial-section -->
+
+        
+    </main> <!-- .main-content -->
+
+    <script>
+        function shareOnFacebook(id) {
+            const shareUrl = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.origin + '{% url "download_music" 0 %}'.replace('0', id));
+            window.open(shareUrl, '_blank');
+        }
+
+        function shareOnTwitter(id) {
+            const shareUrl = 'https://twitter.com/intent/tweet?url=' + encodeURIComponent(window.location.origin + '{% url "download_music" 0 %}'.replace('0', id)) + '&text=Your share text here';
+            window.open(shareUrl, '_blank');
+        }
+
+        function shareOnGooglePlus(id) {
+            const shareUrl = 'https://plus.google.com/share?url=' + encodeURIComponent(window.location.origin + '{% url "download_music" 0 %}'.replace('0', id));
+            window.open(shareUrl, '_blank');
+        }
+
+        function shareOnPinterest(id) {
+            const shareUrl = 'https://pinterest.com/pin/create/button/?url=' + encodeURIComponent(window.location.origin + '{% url "download_music" 0 %}'.replace('0', id)) + '&media=your_share_image&description=Your share description';
+            window.open(shareUrl, '_blank');
+        }
+    </script>
+
+{% endblock %}

@@ -1,0 +1,96 @@
+{% extends 'wiljeanApp/base/base.html' %}
+
+{% load static %}
+{% block title %} {{ album.name }} {% endblock %}
+
+{% block content %}				
+	<main class="main-content" style="padding-top: 50px;">
+		<div class="fullwidth-block download">
+			<div class="container">
+				<div class="">
+					<div class="col-md-5">
+						<h2 class="page-title">{{ album.name }} -- Wiljean Music</h2>
+						{% for music in musics %}
+						<div class="item">
+							
+							<h3 class="item-title">{{music.title}}</h3>
+							<span class="year">{{music.publish_date|date:"Y"}}</span>
+							<a href="{% url 'download_music' music.id  %}" class="button small primary">Download</a>
+							
+							<a href="{% url 'play_mp3' music_id=music.id other_music_id=0 %}" class="button small secondary">Listen to</a>
+
+							<div class="social-share">
+								<span>Share:</span>
+								<a id="facebookShareBtn" href="#"><i class="fa fa-facebook"></i></a>
+								<a id="twitterShareBtn" href="#"><i class="fa fa-twitter"></i></a>
+								<a id="googlePlusShareBtn" href="#"><i class="fa fa-google-plus"></i></a>
+								<a id="pinterestShareBtn" href="#"><i class="fa fa-pinterest"></i></a>
+						</div>
+							
+						</div>
+						{% endfor %}
+
+						
+					</div>
+					<div style="padding-top: 80px;">
+						{% include 'wiljeanApp/base/about_sidebar.html' %}
+					</div>
+					
+				</div>
+			</div>
+		</div> <!-- .testimonial-section -->
+
+		
+	</main> <!-- .main-content -->
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			const currentUrl = window.location.href;
+	
+			document.getElementById('facebookShareBtn').addEventListener('click', function(event) {
+				event.preventDefault();
+				shareOnFacebook(currentUrl);
+			});
+	
+			document.getElementById('twitterShareBtn').addEventListener('click', function(event) {
+				event.preventDefault();
+				shareOnTwitter(currentUrl);
+			});
+	
+			document.getElementById('googlePlusShareBtn').addEventListener('click', function(event) {
+				event.preventDefault();
+				shareOnGooglePlus(currentUrl);
+			});
+	
+			document.getElementById('pinterestShareBtn').addEventListener('click', function(event) {
+				event.preventDefault();
+				shareOnPinterest(currentUrl);
+			});
+		});
+	
+		function shareOnFacebook(url) {
+			// Replace 'your_share_url' with the actual URL you want to share on Facebook
+			const shareUrl = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url);
+			window.open(shareUrl, '_blank');
+		}
+	
+		function shareOnTwitter(url) {
+			// Replace 'your_share_text' and 'your_share_url' with the actual text and URL you want to share on Twitter
+			const shareUrl = 'https://twitter.com/intent/tweet?url=' + encodeURIComponent(url) + '&text=Your share text here';
+			window.open(shareUrl, '_blank');
+		}
+	
+		function shareOnGooglePlus(url) {
+			// Replace 'your_share_url' with the actual URL you want to share on Google Plus
+			const shareUrl = 'https://plus.google.com/share?url=' + encodeURIComponent(url);
+			window.open(shareUrl, '_blank');
+		}
+	
+		function shareOnPinterest(url) {
+			// Replace 'your_share_url' and 'your_share_image' with the actual URL and image URL you want to share on Pinterest
+			const shareUrl = 'https://pinterest.com/pin/create/button/?url=' + encodeURIComponent(url) + '&media=your_share_image&description=Your share description';
+			window.open(shareUrl, '_blank');
+		}
+	</script>
+
+{% endblock %}

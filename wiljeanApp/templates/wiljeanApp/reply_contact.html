@@ -1,0 +1,51 @@
+{% extends 'wiljeanApp/base/base.html' %}
+
+{% block title %} About us{% endblock %}
+{% load static %}
+
+{% block content %}
+<main class="main-content" style="padding-top:100px;">
+	<div class="fullwidth-block inner-content">
+		<div class="container">
+			<h2 class="page-title">Reply to {{contacts.name}} Message</h2>
+                
+                <div class="detail">  
+                    <span class="year">Message: <strong> {{ contacts.message }}</strong></span>    
+                </div>
+            
+			<div class="notification-container" id="notification_message">
+				<!-- message goe here -->
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<form action="." method = "post" class="contact-form">
+						{% csrf_token %}
+						<div class="form-group">
+                            <label for="id_title">Name:</label>
+                            {{ form.name }}
+                            {% for error in form.name.errors %}
+                            <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="id_title">Message:</label>
+                            {{ form.message }}
+                            {% for error in form.message.errors %}
+                            <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+						<input type="submit" value="reply message">
+						
+					</form>
+				</div>
+				{% include 'wiljeanApp/base/address_base.html' %}
+			</div>
+		</div>
+	</div> <!-- .testimonial-section -->
+
+	
+</main> <!-- .main-content -->
+
+
+{% endblock %}

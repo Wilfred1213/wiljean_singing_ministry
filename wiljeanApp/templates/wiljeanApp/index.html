@@ -1,0 +1,111 @@
+{% extends 'wiljeanApp/base/base.html' %}
+{% block title %} Home Page{% endblock %}
+{% load static %}
+{% load cookie_consent_tags %}
+
+{% block content %}		
+<div id="site-content">
+	
+	
+	<div class="hero">
+		<div class="slider">
+			<ul class="slides">
+				
+				{% for slide in slider %}
+					<li class="lazy-bg" data-background="{% static 'dummy/slide-1.jpg' %}">
+						<div class="container">
+							<h2 class="slide-title">{{ slide.header }}</h2>
+							<h3 class="slide-subtitle">{{ slide.title }}</h3>
+							<p class="slide-desc">{{ slide.body|safe }}</p>
+							<a href="#" class="button cut-corner">Read More</a>
+						</div>
+					</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+	
+	
+	<main class="main-content">
+		<div class="fullwidth-block testimonial-section">
+			<div class="container">
+				<div class="quote-slider">
+					<ul class="slides">
+						{% for quote in quotes %}
+						<li>
+							<blockquote>
+								<p>{{ quote.body }}</p>
+								<cite>{{ quote.author }}</cite>
+								<span>{{ quote.more_info }}</span>
+							</blockquote>
+						</li>
+						{% endfor %}
+						
+					</ul>
+				</div>
+			</div>
+		</div> <!-- .testimonial-section -->
+
+		<div class="fullwidth-block upcoming-event-section" data-bg-color="#191919">
+			<div class="container">
+				<header class="section-header">
+					<h2 class="section-title">Upcoming events</h2>
+					<div class="menu-item col-md-12"><a href="{% url 'add_event' %}">Add event. Invite people to your occasion</a></div>
+
+					<div class="event-nav">
+						<a class="prev" id="event-prev" href="#"><i class="fa fa-caret-left"></i></a>
+						<a class="next" id="event-next" href="#"><i class="fa fa-caret-right"></i></a>
+					</div> <!-- .event-nav -->
+
+				</header> <!-- .section-header -->
+				<div class="event-carousel">
+					{% for event in events %}
+					<div class="event">
+						<div class="entry-date">
+							<div class="date">{{ event.date|date:"d" }}</div>
+							<span class="month">{{ event.date|date:"M" }}</span>
+						</div>
+						<h2 class="entry-title"><a href="{% url 'delete_event' event.id %}">{{ event.title }}</a></h2>
+						<p>{{ event.body|truncatewords:10 }}</p>
+					</div> <!-- .event -->
+					{% endfor %}
+					
+					
+					
+				</div> <!-- .event-carousel -->
+			</div> <!-- .container -->
+		</div> <!-- .upcoming-event-section -->
+
+		<div class="fullwidth-block why-chooseus-section">
+			<div class="container">
+				<h2 class="section-title">Why choose us?</h2>
+
+				<div class="row">
+					{% for choose in chooseus%}
+					<div class="col-md-4">
+						
+						<div class="feature">
+							<figure class="cut-corner">
+								<!-- <img src="dummy/medium-image-1.jpg" alt=""> -->
+								<img src="{{ choose.image.url }}" alt="" style="height: 450px;">
+
+							</figure>
+							<h3 class="feature-title">{{choose.title}}</h3>
+							<p>{{ choose.body }}</p>
+						</div> <!-- .feature -->
+						
+					</div>
+					{% endfor %}
+					
+				</div>
+			</div> <!-- .container -->
+		</div> <!-- .why-chooseus-section -->
+	</main> <!-- .main-content -->
+
+	
+</div> <!-- #site-content -->
+
+		
+		
+		
+{% endblock %}

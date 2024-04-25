@@ -1,0 +1,47 @@
+{% extends 'wiljeanApp/base/base.html' %}
+
+{% block title %} All contacts {% endblock %}
+{% load static %}
+
+{% block content %}
+<div class="col-md-10 col-md-push-1" style="padding: 200px;">
+    <aside class="sidebar">
+        <div class="widget">
+            <h3 class="widget-title">All Contacts</h3>
+            
+            <ul class="discography-list">
+                {% for contact, replymessages in zipped_data %}
+                    <li>
+                        <div class="detail">
+                            <h3>
+                                {% if replymessages %}
+                                    {{ contact.name }}
+                                {% else %}
+                                    <a href="{% url 'reply' contact.id %}">{{ contact.name }}</a>
+                                {% endif %}
+                            </h3>
+                            <span class="year" {% if replymessages|length > 0 %} style="color: green;"{% else %} style="color: red;"{% endif %}>
+                                {{ contact.message }}
+                            </span>
+                                
+                            {% if replymessages %}
+                                {% for replymessage in replymessages %}
+                                    <span class="track" style="font-style: italic; color: blue;">
+                                        Replied by {{ replymessage.name }}:
+                                    </span><br>
+                                    <span class="" style="font-style: italic; color: blue;">
+                                        {{ replymessage.message }}
+                                    </span>
+                                {% endfor %}
+                            {% else %}
+                                <span class="track">No replies yet</span>
+                            {% endif %}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </aside>
+</div>
+
+{% endblock %}

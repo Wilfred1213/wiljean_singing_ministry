@@ -1,0 +1,32 @@
+{% load static %}
+<div class="col-md-4 col-md-push-1">
+    <aside class="sidebar">
+        <div class="widget">
+            <h3 class="widget-title">Discography</h3>
+            
+            <ul class="discography-list">
+                {% for album in albums %}
+                <li>
+                    <figure class="cover"><img src="{{ album.cover.url }}" alt="thumbnail 1"></figure>
+                    <div class="detail">
+                        <h3><a href="{% url 'music_details' album.id %}">{{ album.name }}</a></h3>
+                        <span class="year">{{ album.year_of_publish}}</span>
+                        <span class="track">{{ album.tracks }} tracks</span>
+                    </div>
+                </li>
+                {% endfor %}
+                <h3 class="widget-title">Latest Music</h3>
+                {% for latest in latests %}
+                <li>
+                    <figure class="cover"><img src="{{ latest.photo.url }}" alt="thumbnail 1"></figure>
+                    <div class="detail">
+                        <h3><a href="{% url 'other_music_detail' latest.id %}">{{ latest.title }} - by {{ latest.artist }}</a></h3>
+                        <span class="year">{{other.publish_date|date:"Y"}}</span>
+                        <span class="track">{{ album.tracks }} mp3</span>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </aside>
+</div>

@@ -1,0 +1,19 @@
+{% for music in searches %}
+<div class="item">
+    
+    <h3 class="item-title">{{music.title}}-by {{ music.artist }}</h3>
+    <span class="year">{{music.publish_date|date:"Y"}}</span>
+    <a href="{% url 'download_music' music.id  %}" class="button small primary">Download</a>
+    
+    <a href="{% url 'play_mp3' music_id=music.id other_music_id=0 %}" class="button small secondary">Listen to</a>
+
+    <div class="social-share">
+        <span>Share:</span>
+        <a id="facebookShareBtn" href="#"><i class="fa fa-facebook"></i></a>
+        <a id="twitterShareBtn" href="#"><i class="fa fa-twitter"></i></a>
+        <a id="googlePlusShareBtn" href="#"><i class="fa fa-google-plus"></i></a>
+        <a id="pinterestShareBtn" href="#"><i class="fa fa-pinterest"></i></a>
+</div>
+    
+</div>
+{% endfor %}

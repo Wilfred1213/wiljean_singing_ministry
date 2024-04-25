@@ -1,0 +1,99 @@
+{% extends 'wiljeanApp/base/base.html' %}
+
+{% load static %}
+{% block title %} Download {% endblock %}
+
+{% block content %}				
+    <main class="main-content" style="padding-top: 50px;">
+        <div class="fullwidth-block download">
+            <div class="container">
+                {% include 'wiljeanApp/base/search_base.html' %}
+
+                {% if searches %}
+                    {% include 'wiljeanApp/base/search_body.html' %}
+                {% else %}
+
+                    <div class="row">
+                        <div class="col-md-5">
+                            <h2 class="page-title">Wiljean Music</h2>
+                            
+                            {% for music in musics %}
+                            <div class="item">
+                                
+                                <h3 class="item-title">{{music.title}}-by {{ music.artist }}</h3>
+                                <span class="year">{{music.publish_date|date:"Y"}}</span>
+                                <a href="{% url 'download_music' music.id  %}" class="button small primary">Download</a>
+                                <a href="{% url 'play_mp3' music_id=music.id other_music_id=0 %}" class="button small secondary">Play</a>
+                                {% if user == music.user %}
+                                    <a href="" class="button small secondary ">Edit</a>
+                                    <a href="{% url 'confirmation' wil_id=music.id other_music_id=0 %}" class="button small secondary">Delete</a>
+                                {% endif %}
+                                <div class="social-share">
+                                    <span>Share:</span>
+                                    <a href="#" onclick="shareOnFacebook('{{ music.id }}')"><i class="fa fa-facebook"></i></a>
+                                    <a href="#" onclick="shareOnTwitter('{{ music.id }}')"><i class="fa fa-twitter"></i></a>
+                                    <a href="#" onclick="shareOnGooglePlus('{{ music.id }}')"><i class="fa fa-google-plus"></i></a>
+                                    <a href="#" onclick="shareOnPinterest('{{ music.id }}')"><i class="fa fa-pinterest"></i></a>
+                                </div>
+                                    
+                            </div>
+                            {% endfor %}
+
+                            
+                        </div>
+                        
+                        <div class="col-md-5 col-md-push-2">
+                            <h2 class="page-title">Other Artists</h2>
+                            {% for other in other_musics %}
+                            <div class="item">
+                                <h3 class="item-title">{{ other.title }} - by {{ other.artist }}</h3>
+                                <span class="year">{{other.publish_date|date:"Y"}}</span>
+                                <a href="{% url 'download_other_music' other.id %}" class="button small primary">Download</a>
+                                <a href="{% url 'play_mp3' other_music_id=other.id  music_id=0 %}" class="button small secondary">Play</a>
+                                {% if user == other.user or user.is_staff %}
+                                    <a href="{% url 'edit_music' other.id %}" class="button small secondary ">Edit</a>
+                                    <a href="{% url 'confirmation' other_music_id=other.id wil_id=0   %}" class="button small secondary">Delete</a>
+                                {% endif %}
+                                <div class="social-share">
+                                    <span>Share:</span>
+                                    <a href="#" onclick="shareOnFacebook('{{ other.id }}')"><i class="fa fa-facebook"></i></a>
+                                    <a href="#" onclick="shareOnTwitter('{{ other.id }}')"><i class="fa fa-twitter"></i></a>
+                                    <a href="#" onclick="shareOnGooglePlus('{{ other.id }}')"><i class="fa fa-google-plus"></i></a>
+                                    <a href="#" onclick="shareOnPinterest('{{ other.id }}')"><i class="fa fa-pinterest"></i></a>
+                                </div>
+                            </div>
+                            {% endfor %}
+
+                            <a href="{% url 'all_music' %}" class="button col-md-8" style="text-align: center; background-color: rgb(215, 219, 218); color: black;">View all Music</a>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div> <!-- .testimonial-section -->
+
+        
+    </main> <!-- .main-content -->
+
+    <script>
+        function shareOnFacebook(id) {
+            const shareUrl = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.origin + '{% url "download_music" 0 %}'.replace('0', id));
+            window.open(shareUrl, '_blank');
+        }
+
+        function shareOnTwitter(id) {
+            const shareUrl = 'https://twitter.com/intent/tweet?url=' + encodeURIComponent(window.location.origin + '{% url "download_music" 0 %}'.replace('0', id)) + '&text=Your share text here';
+            window.open(shareUrl, '_blank');
+        }
+
+        function shareOnGooglePlus(id) {
+            const shareUrl = 'https://plus.google.com/share?url=' + encodeURIComponent(window.location.origin + '{% url "download_music" 0 %}'.replace('0', id));
+            window.open(shareUrl, '_blank');
+        }
+
+        function shareOnPinterest(id) {
+            const shareUrl = 'https://pinterest.com/pin/create/button/?url=' + encodeURIComponent(window.location.origin + '{% url "download_music" 0 %}'.replace('0', id)) + '&media=your_share_image&description=Your share description';
+            window.open(shareUrl, '_blank');
+        }
+    </script>
+
+{% endblock %}

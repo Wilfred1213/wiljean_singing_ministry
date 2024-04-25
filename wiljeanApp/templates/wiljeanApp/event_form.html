@@ -1,0 +1,84 @@
+{% extends 'wiljeanApp/base/base.html' %}
+
+{% block title %} Upload {% endblock %}
+
+{% block content %}
+<main class="main-content " style="padding-top: 50px;">
+    <div class="fullwidth-block inner-content">
+        <div class="container">
+            <h2 class="page-title ">Let people know of your upcoming event</h2>
+
+            <div class="notification-container" id="notification_message">
+                <!-- event message goes here -->	
+			</div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <form action="{% url 'add_event' %}" method="post" enctype="multipart/form-data" class="contact-form" id="uploadForm">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="id_title">Title:</label>
+                            {{ form.title }}
+                            {% for error in form.title.errors %}
+                            <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_title">Author:</label>
+                            {{ form.author }}
+                            {% for error in form.author.errors %}
+                            <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="id_music">Photo:</label>
+                            {{ form.image }}
+                            
+                            {% for error in form.image.errors %}
+                            <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_location">Date:</label>
+                            {{ form.date }}
+                            {% for error in form.date.errors %}
+                            <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_location">Time:</label>
+                            {{ form.time }}
+                            {% for error in form.time.errors %}
+                            <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_location">Message:</label>
+                            {{ form.body }}
+                            {% for error in form.body.errors %}
+                            <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_location">Address:</label>
+                            {{ form.address }}
+                            {% for error in form.address.errors %}
+                            <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                        <input type="submit" value="Post Event" class="btn btn-primary">
+                    </form>
+                </div>
+                {% include 'wiljeanApp/base/about_sidebar.html' %}
+            </div>
+        </div>
+    </div>
+</main>
+
+
+
+{% endblock %}
+
+
+

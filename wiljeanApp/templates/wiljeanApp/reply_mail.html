@@ -1,0 +1,20 @@
+{% extends 'wiljeanApp/base/send_mail_base.html' %}
+{% block title %} Reply from Wiljean Ministry{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Wiljean Singing Ministry</h1>
+    <p>You have contacted Wiljean singing ministry</p>
+    <strong>Date:</strong> {{ instance.contact.date }}
+    <p>Your message: {{instance.contact.message}}</p>
+    
+        <strong>reply:</strong> {{ message }}<br>
+        <strong>date:</strong> {{ date }}
+    </p>
+    <p>Thank you for choosing our services.</p>
+</div>
+
+<div class="footer">
+    <p>This email was sent by Wiljean Singing Mininstry. You can reply to this email.</p>
+</div>
+{% endblock %}

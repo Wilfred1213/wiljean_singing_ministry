@@ -1,0 +1,193 @@
+{% load static %}
+{% load cookie_consent_tags %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1">
+		
+		<title>Wiljean Ministry |{% block title %}{% endblock %}</title>
+		<!-- Loading third party fonts -->
+		<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900" rel="stylesheet" type="text/css">
+		<!-- <link href="fonts/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+		<link href="{% static 'fonts/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+		<!-- Loading main css file -->
+		<link rel="stylesheet" href="{% static 'style.css' %}">
+		<link rel="stylesheet" href="{% static 'cookie.css' %}">
+		<!-- Include Axios from a CDN -->
+		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+		<!-- Include jQuery from Google CDN -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
+		
+		
+		<script>
+			$(document).ready(function(){
+			// Function to close the alert when close button is clicked
+			document.addEventListener('DOMContentLoaded', function() {
+				document.querySelectorAll('.alert .close').forEach(function(closeBtn) {
+					closeBtn.addEventListener('click', function() {
+						this.closest('.alert').style.display = 'none';
+					});
+				});
+			});
+		
+});
+</script>
+<style>
+.notification-container {
+    position: fixed;
+    top: 0%;
+    left: 45%;
+    /* transform: translate(-50%, -50%); */
+    text-align: center;
+    z-index: 10;
+    color: red; /* Red text color */
+}
+
+
+	.alert {
+		margin-bottom: 10px;
+	}
+
+	.close {
+		position: absolute;
+		top: 0;
+		right: 0;
+		padding: 5px 10px;
+		background-color: transparent;
+		border: none;
+		cursor: pointer;
+	}
+
+	.search-form {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.search-form .form-control {
+    border-radius: 30px;
+    padding: 15px;
+    font-size: 16px;
+    border-color: #ddd;
+    box-shadow: none;
+}
+
+.search-form .btn-primary {
+    border-radius: 30px;
+    padding: 14px 30px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+}
+
+.search-form .btn-primary:hover {
+    background-color: #45a049;
+    border-color: #45a049;
+}
+
+</style>
+
+	</head>
+<body class="header-collapse">
+	<div id="cookie-consent">
+		<p>This website uses cookies to ensure you get the best experience on our website.</p>
+		<button id="accept-cookies">Accept Cookies</button>
+		<button id="decline-cookies">Decline Cookies</button>
+	</div>
+
+
+	<header class="site-header">
+		<div class="container">
+			<a href="{% url 'index' %}" id="branding">
+				<img src="{% static 'dummy/WhatsApp Image 2024-04-01 at 10.41.04 AM.jpeg' %}" alt="Site Title" style="width:80px; height:60px;">
+				<small class="site-description">A gift to the world</small>
+			</a> <!-- #branding -->
+			
+			<nav class="main-navigation">
+				<button type="button" class="toggle-menu"><i class="fa fa-bars"></i></button>
+				<ul class="menu">
+					<li class="menu-item current-menu-item"><a href="{% url 'index' %}">Home</a></li>
+					<li class="menu-item"><a href="{% url 'about' %}">About</a></li>
+					<li class="menu-item"><a href="{% url 'gallery' %}">Gallery</a></li>
+					<li class="menu-item"><a href="{% url 'download' %}">Download</a></li>
+					<li class="menu-item"><a href="{% url 'blog' %}">Blog</a></li>
+					<li class="menu-item"><a href="{% url 'upload' %}">Upload</a></li>
+					<li class="menu-item"><a href="{% url 'contact' %}">Contact</a></li>
+					<li class="menu-item"><a href="{% url 'add_event' %}">Add event</a></li>
+					{% if not user.is_authenticated %}
+					<li class="menu-item"><a href="{% url 'authentication:signin' %}">Login</a></li>
+					
+					{% endif %}
+					{% if user.is_authenticated %}
+					<li class="menu-item"><a href="{% url 'authentication:signout' %}">Hi {{user}}! Logout</a></li>
+					
+					{% endif %}
+					{% if user.is_staff %}
+					<li class="menu-item"><a href="{% url 'blog_upload' %}">Create Blog</a></li>
+					{% endif %}
+				</ul> <!-- .menu -->
+			</nav> <!-- .main-navigation -->
+			<div class="mobile-menu"></div>
+
+		</div>
+	</header> <!-- .site-header -->
+	<!-- Notification Message Container -->
+    <div class="notification-container">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-dismissible alert-{{ message.tags }}">
+            <button type="button" class="button close" data-dismiss="alert">&times;</button>
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+    <!-- End Notification Message Container -->
+	
+	
+
+	{% block content %}
+	{% endblock %}
+
+	<footer class="site-footer">
+		<div class="container">
+			<img src="{% static 'dummy/logo-footer.png' %}" alt="Site Name">
+			
+			<address>
+				<p>St. Johnbosco Dafa, Kwali Area Council. FCT Abuja <br>
+					<a href="">+234 8134622388</a> <br>
+					<a href="{% url 'contact' %}">mathiaswilfred7@yahoo.com</a></p> 
+			</address> 
+			
+			<form action="." method="POST" class="newsletter-form">
+				{% csrf_token %}
+				<input type="email" name = "email" placeholder="Enter your email to join newsletter...">
+				<input type="submit" class="button cut-corner" value="Subscribe">
+			</form> <!-- .newsletter-form -->
+			
+			<div class="social-links">
+				<a href="#"><i class="fa fa-facebook-square"></i></a>
+				<a href="#"><i class="fa fa-twitter"></i></a>
+				<a href="#"><i class="fa fa-google-plus"></i></a>
+				<a href="#"><i class="fa fa-pinterest"></i></a>
+			</div> <!-- .social-links -->
+			
+			<p class="copy">Copyright 2014 Wiljean Ministry. Designed by Wilfred. All right reserved</p>
+		</div>
+	</footer> <!-- .site-footer -->
+
+
+	<script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+	<script src="{% static 'js/plugins.js' %}"></script>
+	<script src="{% static 'js/app.js' %}"></script>
+	<script src="{% static 'js/audio.js' %}"></script>
+	<script src="{% static 'js/cookie.js' %}"></script>
+	<script src="{% static 'js/jssubmission.js' %}"></script>
+
+</body>
+</html>

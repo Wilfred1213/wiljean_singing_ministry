@@ -1,0 +1,37 @@
+{% extends 'wiljeanApp/base/base.html' %}
+
+{% block title %} About us{% endblock %}
+{% load static %}
+
+{% block content %}
+<div id="site-content" style="padding-top: 100px;">
+	
+	<main class="main-content">
+		<div class="fullwidth-block inner-content">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-7">
+						<div class="content">
+							<h2 class="entry-title">Our History</h2>
+							{% for about in abouts %}
+							<figure class="featured-image">
+								<!-- <img src="dummy/post-image.jpg" alt="post image"> -->
+								<img src="{{ about.image.url }}" alt="post image">
+							</figure>
+							<p class="leading">{{ about.title|safe }}</p>
+							<p>{{ about.body | safe }}</p>
+
+							{% endfor %}
+						</div>
+					</div>
+					{% include 'wiljeanApp/base/about_sidebar.html' %}
+				</div>
+			</div>
+		</div> <!-- .testimonial-section -->
+
+		
+	</main> <!-- .main-content -->
+
+	
+</div> <!-- #site-content -->
+{% endblock %}

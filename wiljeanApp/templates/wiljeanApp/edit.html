@@ -1,0 +1,117 @@
+{% extends 'wiljeanApp/base/base.html' %}
+
+{% block title %} Upload {% endblock %}
+
+{% block content %}
+<main class="main-content " style="padding-top: 50px;">
+    <div class="fullwidth-block inner-content">
+        <div class="container">
+            <h2 class="page-title ">Edit your Music</h2>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <form method="post" action="." enctype="multipart/form-data" class="contact-form" id="editForm">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="id_title">Title:</label>
+                            {{ form.title }}
+                            {% for error in form.title.errors %}
+                            <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_title">Artist:</label>
+                            {{ form.artist }}
+                            {% for error in form.artist.errors %}
+                            <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_music">Music File:</label>
+                            {{ form.file }}
+                            <small class="text-muted">Maximum file size: 10MB</small>
+                            {% for error in form.file.errors %}
+                            <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="id_album">Album:</label>
+                            {{ form.album }}
+                            {% for error in form.album.errors %}
+                            <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_music">Photo:</label>
+                            {{ form.photo }}
+                            
+                            {% for error in form.photo.errors %}
+                            <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_location">Location:</label>
+                            {{ form.location }}
+                            {% for error in form.location.errors %}
+                            <p class="text-danger">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                        <input type="submit" value="Upload Music" class="btn btn-primary">
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <!-- Your contact information -->
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script>
+    $(document).ready(function(){
+        $("#editForm").submit(function(event){
+            event.preventDefault();
+            let formData =new FormData($(this)[0]);
+            let url = "{% url 'download' %}"
+
+            $.ajax({
+                url: $(this).attr("action"),
+                type: $(this).attr('method'),
+                data: $(this).serialize(),
+                // contentType:JSON,
+                // processData:false,
+                success: function(response){
+                    if(response.success){
+                        console.log('Updated successfull', response.message)
+                        window.location.href = url;
+
+                    }else{
+                        console.log('Fail', response.message)
+                        // window.location.href = url;
+                    }
+                },
+                error: function(error){
+                    console.log(error)
+                }
+            });
+
+        });
+
+    
+        document.getElementById("id_music").addEventListener("change", function () {
+            const fileInput = this;
+            if (fileInput.files.length > 0) {
+                const fileSize = fileInput.files[0].size; // in bytes
+                const maxSize = 10 * 1024 * 1024; // 10MB
+                if (fileSize > maxSize) {
+                    alert("File size exceeds the limit (10MB).");
+                    fileInput.value = ""; // Clear the input
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}
+
+
+

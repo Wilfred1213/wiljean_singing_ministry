@@ -1,0 +1,32 @@
+{% extends 'wiljeanApp/base/base.html' %}
+
+{% block title %} Loggin Page {% endblock %}
+{% load static %}
+
+{% block content %}
+<main class="main-content" style="padding-top:100px;">
+	<div class="fullwidth-block inner-content">
+		<div class="container">
+			<h2 class="page-title">Login</h2>
+			
+			<div class="row">
+				<div class="col-md-6">
+					<form action="#" method = "post" class="contact-form">
+						{% csrf_token %}
+						<input type="text" name="username" placeholder="Your username"..>
+						<input type="password" name="password" placeholder="Password">
+						<input type="submit" value="Sign in">
+					</form>
+					<li class="menu-item"><a href="{% url 'authentication:signup' %}">Dont have account? Singn up</a></li>
+					<li class="menu-item"><a href="{% url 'password_reset' %}">Forget password</a></li>
+				</div>
+				{% include 'wiljeanApp/base/about_sidebar.html' %}
+				<!-- {% include 'wiljeanApp/base/address_base.html' %} -->
+			</div>
+		</div>
+		
+	</div> <!-- .testimonial-section -->
+
+	
+</main> <!-- .main-content -->
+{% endblock %}
